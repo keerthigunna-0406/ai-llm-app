@@ -13,7 +13,7 @@ export default function Home() {
     setResponse('')
 
     try {
-      const res = await fetch('http://localhost:8000/generate', {
+      const res = await fetch('https://ai-llm-app.onrender.com/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt }),
