@@ -35,7 +35,7 @@ async def generate_text(request: PromptRequest):
                 {"role": "user", "content": request.prompt},
             ]
         )
-        return {"result": response.choices[0].message.content}
+    return {"response": response.choices[0].message.content}
 
     except Exception as e:
         return {"error": str(e)}
