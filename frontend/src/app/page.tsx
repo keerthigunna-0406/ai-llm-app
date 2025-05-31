@@ -12,6 +12,12 @@ export default function Home() {
     setLoading(true)
     setResponse('')
 
+    if (!prompt.trim()) {
+      setResponse("⚠️ Please enter a prompt.")
+      setLoading(false)
+      return
+    }
+
     try {
       const res = await fetch('https://ai-llm-app.onrender.com/generate', {
         method: 'POST',
@@ -22,7 +28,7 @@ export default function Home() {
       const data = await res.json()
       setResponse(data.response)
     } catch (error) {
-      setResponse('Error: Could not connect to backend.')
+      setResponse('❌ Error: Could not connect to backend.')
       console.error(error)
     } finally {
       setLoading(false)
@@ -34,11 +40,12 @@ export default function Home() {
       <h1 className="text-2xl font-bold mb-4">Ask the LLM</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <textarea
-          className="w-full border rounded p-2"
+          className="w-full border rounded p-2 bg-white text-black"
           rows={4}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Type your prompt here..."
+          disabled={loading}
         />
         <button
           type="submit"
@@ -47,13 +54,20 @@ export default function Home() {
         >
           {loading ? 'Generating...' : 'Submit'}
         </button>
+
+        {loading && (
+          <div className="mt-4 text-sm text-blue-500 animate-pulse">
+            ⏳ Generating response...
+          </div>
+        )}
       </form>
+
       {response && (
-  <div className="mt-6 p-4 bg-gray-100 border rounded">
-    <h2 className="font-semibold text-black">Response:</h2>
-    <p className="text-black">{response}</p>
-  </div>
-  )}
+        <div className="mt-6 p-4 bg-gray-100 border rounded">
+          <h2 className="font-semibold text-black mb-2">Response:</h2>
+          <p className="text-black whitespace-pre-wrap">{response}</p>
+        </div>
+      )}
     </main>
   )
 }
