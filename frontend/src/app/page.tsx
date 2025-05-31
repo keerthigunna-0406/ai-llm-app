@@ -27,7 +27,7 @@ export default function Home() {
 
       const data = await res.json()
       console.log("Received from backend:", data)
-      setResponse(data.result || data.response || "⚠️ No response returned")
+      setResponse(data.response || data.result || "⚠️ No response returned")
     } catch (error) {
       setResponse('❌ Error: Could not connect to backend.')
       console.error(error)
