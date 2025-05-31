@@ -26,7 +26,7 @@ export default function Home() {
       })
 
       const data = await res.json()
-      setResponse(data.response)
+      setResponse(data.result || data.response || "⚠️ No response returned")
     } catch (error) {
       setResponse('❌ Error: Could not connect to backend.')
       console.error(error)
