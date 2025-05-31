@@ -35,7 +35,13 @@ async def generate_text(request: PromptRequest):
                 {"role": "user", "content": request.prompt},
             ]
         )
+
+        # ✅ Log the full response
+        print("OpenAI API Response:", response)
+
+        # ✅ Return just the message content
         return {"response": response.choices[0].message.content}
 
     except Exception as e:
+        print("❌ OpenAI Error:", str(e))
         return {"error": str(e)}
